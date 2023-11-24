@@ -17,6 +17,9 @@ class Gif
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
+    #[ORM\Column(type: 'string')]
+    private string $gifFilename;  
+
     #[ORM\Column(type: Types::ARRAY, nullable: true)]
     private ?array $tags = null;
 
@@ -64,6 +67,18 @@ class Gif
     public function setAuthor(?User $author): static
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    public function getGifFilename(): string
+    {
+        return $this->gifFilename;
+    }
+
+    public function setGifFilename(string $gifFilename): self
+    {
+        $this->gifFilename = $gifFilename;
 
         return $this;
     }
