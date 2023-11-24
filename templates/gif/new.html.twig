@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Gif{% endblock %}
+
+{% block body %}
+    <h1>Create new Gif</h1>
+
+    {{ include('gif/_form.html.twig') }}
+    <a href="{{ path('app_gif_index') }}">back to list</a>
+{% endblock %}
