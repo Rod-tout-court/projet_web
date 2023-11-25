@@ -35,12 +35,9 @@ class GifController extends AbstractController
             $gifFile = $form->get('gif')->getData();
             if ($gifFile) {
                 $originalFilename = pathinfo($gifFile->getClientOriginalName(), PATHINFO_FILENAME);
-                
                 $safeFilename = $slugger->slug($originalFilename);
                 $newFilename = $safeFilename.'-'.uniqid().'.'.$gifFile->guessExtension();
 
-                
-                // Move the file to the directory where brochures are stored
                 try {
                     $gifFile->move(
                         $this->getParameter('gif_directory'),
@@ -49,10 +46,8 @@ class GifController extends AbstractController
                 } catch (FileException $e) {
                     //gérer plus tard l'erreur
                 }
-
                 $gif->setGifFilename($newFilename);
             }
-
             $entityManager->persist($gif);
             $entityManager->flush();
 
