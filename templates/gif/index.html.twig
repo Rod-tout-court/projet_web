@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gif index{% endblock %}
+
+{% block body %}
+    <h1>Gif index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>GifFilename</th>
+                <th>Tags</th>
+                <th>Visible</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for gif in gifs %}
+            <tr>
+                <td>{{ gif.id }}</td>
+                <td>{{ gif.name }}</td>
+                <td>{{ gif.gifFilename }}</td>
+                <td>{{ gif.tags ? gif.tags|join(', ') : '' }}</td>
+                <td>{{ gif.visible ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('app_gif_show', {'id': gif.id}) }}">show</a>
+                    <a href="{{ path('app_gif_edit', {'id': gif.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_gif_new') }}">Create new</a>
+{% endblock %}

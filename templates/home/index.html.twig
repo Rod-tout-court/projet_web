@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
 
+<<<<<<< HEAD
 {% block title %}Bienvenue !{% endblock %}
 
 {% block body %}
@@ -25,5 +26,49 @@
       </section>
 
       
+=======
+{% block title %}Gifland{% endblock %}
+
+{% block body %}
+
+    <!-- Gif Section -->
+    <section class="container my-4">
+        <h1 class="text-center">Librairie de gif en ligne</h1>
+        <!-- Research Section -->
+        <div class="input-group mb-3">
+            <input type="search" id="form1" class="form-control" placeholder="Rechercher" />
+            <button type="button" class="btn btn-dark">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+
+
+        <!-- Carousel Section -->
+        <div id="gifCarousel" class="carousel slide mx-auto" data-bs-ride="carousel" data-bs-interval="2000" style="max-width: 500px;">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="{{ asset('images/theOffice1.gif') }}" class="d-block w-75 mx-auto" alt="The office Michael Scott">
+                </div>
+                <div class="carousel-item">
+                    <img src="{{ asset('images/theOffice2.gif') }}" class="d-block w-75 mx-auto" alt="The office Stanley">
+                </div>
+                <div class="carousel-item">
+                    <img src="{{ asset('images/theOffice3.gif') }}" class="d-block w-75 mx-auto" alt="The office Dwight">
+                </div>
+                <div class="carousel-item">
+                    <img src="{{ asset('images/theOffice4.gif') }}" class="d-block w-75 mx-auto" alt="The office Jim">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#gifCarousel" data-bs-slide="prev" style="color: black;">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#gifCarousel" data-bs-slide="next" style="color: black;">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </section>
+>>>>>>> feature/navbar
 
 {% endblock %}
