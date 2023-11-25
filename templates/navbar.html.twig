@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg bg-light">
+<nav class="navbar navbar-expand-lg bg-light py-2">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">Accueil</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -15,10 +15,18 @@
             <li><a class="dropdown-item" href="{{ path('app_gif_index')}}">Afficher</a></li>
           </ul>
         </li>
+        <!-- Utilisez d-lg-none pour masquer l'icône sur des écrans larges -->
+        <li class="nav-item d-lg-none">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-person-fill"></i> Connexion
+          </button>
+        </li>
       </ul>
     </div>
-   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-      <i class="bi bi-person-fill">Connexion</i>
+    <!-- Utilisez d-none pour masquer le texte de connexion sur des écrans larges -->
+    <button class="navbar-toggler d-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <i class="bi bi-person-fill"></i>
+      Connexion
     </button>
   </div>
 </nav>
