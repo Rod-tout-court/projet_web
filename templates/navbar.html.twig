@@ -13,7 +13,7 @@
         <a class="nav-link ms-auto" href="#">Déconnexion</a>
       {% else %}
         {# Utilisateur non connecté #}
-        <a class="nav-link ms-auto" href="#"><i class="bi bi-person-fill"></i>Se connecter</a>
+        <a class="nav-link ms-auto" href="{{ path('app_register')}}"><i class="bi bi-person-fill"></i>Se connecter</a>
       {% endif %}
     </div>
   </div>
