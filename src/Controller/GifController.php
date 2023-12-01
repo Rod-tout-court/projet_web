@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\Security\Core\Security;
+
 
 #[Route('/gif')]
 class GifController extends AbstractController
@@ -25,7 +27,7 @@ class GifController extends AbstractController
     }
 
     #[Route('/new', name: 'app_gif_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, SluggerInterface $slugger, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, SluggerInterface $slugger, EntityManagerInterface $entityManager, Security $security): Response
     {
         $gif = new Gif();
         $form = $this->createForm(GifType::class, $gif);
@@ -46,6 +48,11 @@ class GifController extends AbstractController
                 } catch (FileException $e) {
                     //gérer plus tard l'erreur
                 }
+                $gif->setVisible(true);
+                $gif->setName($newFilename);
+                // On ajoute le nom de l'auteur
+                $author = $security->getUser();
+                $gif->setAuthor($author);
                 $gif->setGifFilename($newFilename);
             }
             $entityManager->persist($gif);

@@ -15,32 +15,17 @@ class GifType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder
-                ->add('name', null, [
-                    'label' => 'Nom',
-                    'attr' => ['class' => 'form-control'],
-                ])
-                ->add('gifFilename', null, [
-                    'label' => 'Nom du fichier GIF',
-                    'attr' => ['class' => 'form-control'],
-                ])
                 ->add('tags', null, [
                     'label' => 'Tags',
-                    'attr' => ['class' => 'form-control'],
-                ])
-                ->add('visible', CheckboxType::class, [
-                    'label' => 'Visible',
-                ])
-                ->add('author', null, [
-                    'label' => 'Auteur',
                     'attr' => ['class' => 'form-control'],
                 ])
                 ->add('gif', FileType::class, [
                     'label' => 'GIF (Fichier GIF)',
                     'mapped' => false,
-                    'required' => false,
+                    'required' => true,
                     'constraints' => [
                         new File([
-                            'maxSize' => '1024k',
+                            'maxSize' => '30M',
                             'mimeTypes' => [
                                 'image/gif',
                                 'application/x-tgif',
