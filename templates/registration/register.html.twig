@@ -17,7 +17,7 @@
 
         <button type="submit" class="btn btn-dark">S'inscrire</button>
         <div>
-        <p>Vous avez déjà un compte ? Cliquez ici pour vous <a href="#"> connecter ! </a></p>
+        <p>Vous avez déjà un compte ? Cliquez ici pour vous <a href="{{ path('app_login')}}"> connecter ! </a></p>
         </div>
     {{ form_end(registrationForm) }}
 {% endblock %}
