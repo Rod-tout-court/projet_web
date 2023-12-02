@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier votre profil{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Modifier votre profil</h1>
+
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                {{ form_start(form, {'attr': {'class': 'form'}}) }}
+
+                <div class="form-group">
+                    {{ form_row(form.pseudo, {'attr': {'class': 'form-control', 'placeholder': 'Pseudo'}}) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form_row(form.mail, {'attr': {'class': 'form-control', 'placeholder': 'Email'}}) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form_row(form.password, {'attr': {'class': 'form-control', 'placeholder': 'Mot de passe'}}) }}
+                </div>
+                <br>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-dark btn-block">Enregistrer vos modifications</button>
+                    <a href="{{ path('app_profil_show') }}" class="btn btn-dark btn-block">Annuler</a>
+                </div>
+                <br>
+                
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
