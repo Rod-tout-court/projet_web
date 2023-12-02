@@ -1,4 +1,6 @@
-<form method="post" action="{{ path('app_gif_delete', {'id': gif.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
-    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ gif.id) }}">
-    <button class="btn">Delete</button>
-</form>
+<div class="container mt-5">
+    <form method="post" action="{{ path('app_gif_delete', {'id': gif.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');" class="text-center">
+        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ gif.id) }}">
+        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item?')">Supprimer</button>
+    </form>
+</div>

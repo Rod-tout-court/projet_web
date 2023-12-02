@@ -1,13 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Gif{% endblock %}
+{% block title %}Modifier un Gif{% endblock %}
 
 {% block body %}
-    <h1>Edit Gif</h1>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h1 class="text-center mb-4">Modifier le Gif</h1>
 
-    {{ include('gif/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('app_gif_index') }}">back to list</a>
-
-    {{ include('gif/_delete_form.html.twig') }}
+                {{ include('gif/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+                <br>
+                <a href="{{ path('app_gif_index') }}" class="btn btn-dark btn-block">Retour à la liste</a>
+                <div class="d-flex mt-3">
+                    {{ include('gif/_delete_form.html.twig', {'button_label': 'Supprimer'}) }}
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
