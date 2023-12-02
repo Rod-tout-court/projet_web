@@ -50,7 +50,7 @@ public function editProfil(Request $request, SluggerInterface $slugger, Persiste
         }
 
         // Get the entity manager using $this->getDoctrine()->getManager()
-        $entityManager = $this->getDoctrine()->getManager(); // Fixed this line
+        $entityManager = $doctrine->getManager(); // Fixed this line
 
         $entityManager->persist($user);
         $entityManager->flush();
