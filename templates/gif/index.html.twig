@@ -14,7 +14,9 @@
                     <th scope="col">Gif</th>
                     <th scope="col">Tags</th>
                     <th scope="col">Visible</th>
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                     <th scope="col">Actions</th>
+                     {% endif %}
                 </tr>
             </thead>
             <tbody>
@@ -25,11 +27,13 @@
                         <td><img src="{{ asset('uploads/gif/' ~ gif.gifFilename) }}" class="img-thumbnail" alt="{{ gif.name }}"></td>
                         <td>{{ gif.tags ? gif.tags|join(', ') : '' }}</td>
                         <td>{{ gif.visible ? 'Yes' : 'No' }}</td>
+                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                         <td>
                             <a href="{{ path('app_gif_show', {'id': gif.id}) }}" class="btn btn-dark btn-sm">Show</a>
                             <a href="{{ path('app_gif_edit', {'id': gif.id}) }}" class="btn btn-dark btn-sm">Edit</a>
                             <a href="{{ path('app_gif_delete', {'id': gif.id}) }}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</a>
                         </td>
+                        {% endif %}
                     </tr>
                 {% else %}
                     <tr>
