@@ -32,6 +32,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $mail = null;
 
+    #[ORM\Column(type: 'string', nullable: true)]
+    private ?string $photoProfilFilename = null;
+
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -93,6 +98,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function getPhotoProfilFilename(): ?string
+    {
+        return $this->photoProfilFilename;
+    }
+
+
+    public function setPhotoProfilFilename(string $photoProfilFilename): self
+    {
+        $this->photoProfilFilename = $photoProfilFilename;
+
+        return $this;
+    }
+
     /**
      * @see UserInterface
      */
@@ -114,7 +132,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function __toString() : string {
-        return "" . $this->id . "#" . $this->pseudo;
+    public function __toString(): string
+    {
+        return $this->id . '#' . $this->pseudo;
     }
+
 }

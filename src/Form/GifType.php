@@ -7,7 +7,10 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Validator\Constraints\File;
 
 class GifType extends AbstractType
@@ -41,6 +44,8 @@ class GifType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Gif::class,
+            'user' => null, // Ajouter une option pour stocker l'utilisateur connecté
         ]);
     }
+
 }

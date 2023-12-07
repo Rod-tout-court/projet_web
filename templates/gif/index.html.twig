@@ -3,41 +3,46 @@
 {% block title %}Gif index{% endblock %}
 
 {% block body %}
-    <h1>Gif index</h1>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Gif Index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Aperçu</th>
-                <th>Name</th>
-                <th>GifFilename</th>
-                <th>Tags</th>
-                <th>Visible</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for gif in gifs %}
-            <tr>
-                <td>{{ gif.id }}</td>
-                <td><img src="{{ asset("uploads/gif/" ~ gif.name) }}" style="max-width: 250px" /></td>
-                <td>{{ gif.name }}</td>
-                <td>{{ gif.gifFilename }}</td>
-                <td>{{ gif.tags ? gif.tags|join(', ') : '' }}</td>
-                <td>{{ gif.visible ? 'Yes' : 'No' }}</td>
-                <td>
-                    <a href="{{ path('app_gif_show', {'id': gif.id}) }}">show</a>
-                    <a href="{{ path('app_gif_edit', {'id': gif.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+        <table class="table table-bordered table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Gif</th>
+                    <th scope="col">Tags</th>
+                    <th scope="col">Visible</th>
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <th scope="col">Actions</th>
+                     {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for gif in gifs %}
+                    <tr>
+                        <td>{{ gif.id }}</td>
+                        <td>{{ gif.name }}</td>
+                        <td><img src="{{ asset('uploads/gif/' ~ gif.gifFilename) }}" class="img-thumbnail" alt="{{ gif.name }}"></td>
+                        <td>{{ gif.tags ? gif.tags|join(', ') : '' }}</td>
+                        <td>{{ gif.visible ? 'Yes' : 'No' }}</td>
+                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <td>
+                            <a href="{{ path('app_gif_show', {'id': gif.id}) }}" class="btn btn-dark btn-sm">Show</a>
+                            <a href="{{ path('app_gif_edit', {'id': gif.id}) }}" class="btn btn-dark btn-sm">Edit</a>
+                            <a href="{{ path('app_gif_delete', {'id': gif.id}) }}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</a>
+                        </td>
+                        {% endif %}
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6" class="text-center">Pas de gif à afficher!</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
 
-    <a href="{{ path('app_gif_new') }}">Create new</a>
+        <a href="{{ path('app_gif_new') }}" class="btn btn-dark">Ajouter un nouveau gif !</a>
+    </div>
 {% endblock %}

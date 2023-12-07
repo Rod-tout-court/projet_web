@@ -8,3 +8,12 @@ controllers:
 home:
     path: /
     controller: App\Controller\HomeController::index
+app_profile_show:
+    path: /profil
+    controller: App\Controller\ProfilController::showProfil
+app_profile_edit:
+    path: /profil/edit
+    controller: App\Controller\ProfilController::editProfil
+
+
+

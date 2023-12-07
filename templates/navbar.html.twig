@@ -1,16 +1,39 @@
 <nav class="navbar navbar-expand-lg bg-light py-2">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="{{ path('app_home')}}">Accueil</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <a class="navbar-brand" href="{{ path('app_gif_index')}}">
-            Gif
-    </a>
-     <a class="navbar-brand" href="{{ path('app_contact')}}">
-            Contact
-    </a>
-    <a class="navbar-brand" href="#">
-      <i class="bi bi-person-fill"></i></a>
-  </div>
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{{ path('app_home')}}">Accueil</a>
+        <a class="navbar-brand" href="{{ path('app_gif_index')}}">Gif</a>
+
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            {% if is_granted('ROLE_ADMIN') %}
+                <a class="navbar-brand" href="{{ path('app_user_index')}}">Utilisateur</a>
+            {% endif %}
+        {% endif %}
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <div class="ms-auto">
+                    <a class="nav-link" href="{{ path('app_profil_show')}}">
+                        {% set currentUser = app.user %}
+                        {% if currentUser and currentUser.photoProfilFilename %}
+                            <img src="{{ asset('uploads/photoProfil/' ~ currentUser.photoProfilFilename) }}"
+                                 class="rounded-circle img-fluid profile-img-small" alt="Profil Picture">
+                            {{ currentUser.pseudo }}
+                        {% else %}
+                            <img src="{{ asset('uploads/photoProfil/default_profile_image.jpg') }}"
+                                 class="rounded-circle img-fluid profile-img-small" alt="Default Profil Picture">
+                            {{ currentUser.pseudo }}
+                        {% endif %}
+                    </a>
+                    <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
+                </div>
+            {% else %}
+                {# Utilisateur non connecté #}
+                <a class="nav-link ms-auto" href="{{ path('app_register')}}"><i
+                            class="bi bi-person-fill fs-4"></i></a>
+            {% endif %}
+        </div>
+    </div>
 </nav>

@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Votre profil</h1>
+
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center">
+                {% if user.photoProfilFilename %}
+                    <img src="{{ asset('uploads/photoProfil/' ~ user.photoProfilFilename) }}" class="rounded-circle img-fluid photo-profile-img-small" alt="Profil Picture">
+                {% else %}
+                    <img src="{{ asset('uploads/photoProfil/default_profile_image.jpg') }}" class="rounded-circle img-fluid photo-profile-img-small" alt="Default Profil Picture">
+                {% endif %}
+                <dl class="row">
+                    <dt class="col-sm-3">Pseudo:</dt>
+                    <dd class="col-sm-9">{{ user.pseudo }}</dd>
+                    <dt class="col-sm-3">Email:</dt>
+                    <dd class="col-sm-9">{{ user.mail }}</dd>
+                </dl>
+
+                
+
+                <a href="{{ path('app_profil_edit') }}" class="btn btn-dark mt-3">Modifier votre profil</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
