@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+<div class="ui centered grid">
+<div class="ten wide column">
+    <div class="ui center aligned segment">
+    {% for label, messages in app.flashes(['success']) %}
+        {% for message in messages %}
+            <div class="flash-{{label}}">
+                {{message}}
+            </div>
+        {% endfor %}
+    {% endfor %}
+        <h1 class="header">Nous contacter</h1>
+        <form class="ui form" action="{{path('app_contact')}}" method="POST">
+            <div class="two fields">
+                <div class=" field">
+                    <label>Prénom</label>
+                    <input type="text" name="contact[firstname]">
+                </div>
+                <div class=" field">
+                    <label>Nom</label>
+                    <input type="text" name="contact[lastname]">
+                </div>
+            </div>
+            <div class=" field">
+                <label>Email</label>
+                <input type="email" name="contact[email]">
+            </div>
+            <div class=" field">
+                <label>Message</label>
+                <textarea name="contact[message]"></textarea>
+            </div>
+            <button class="ui button" type="submit">Envoyer</button>
+        </form>
+    </div>
+</div>
+</div>
+{% endblock %}
