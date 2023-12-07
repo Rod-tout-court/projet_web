@@ -13,11 +13,14 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 
 #[Route('/gif')]
 class GifController extends AbstractController
 {
+    private $logger;
     #[Route('/', name: 'app_gif_index', methods: ['GET'])]
     public function index(GifRepository $gifRepository): Response
     {

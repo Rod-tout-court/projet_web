@@ -9,6 +9,7 @@
         <thead>
             <tr>
                 <th>Id</th>
+                <th>Aperçu</th>
                 <th>Name</th>
                 <th>GifFilename</th>
                 <th>Tags</th>
@@ -20,6 +21,7 @@
         {% for gif in gifs %}
             <tr>
                 <td>{{ gif.id }}</td>
+                <td><img src="{{ asset("uploads/gif/" ~ gif.name) }}" style="max-width: 250px" /></td>
                 <td>{{ gif.name }}</td>
                 <td>{{ gif.gifFilename }}</td>
                 <td>{{ gif.tags ? gif.tags|join(', ') : '' }}</td>
