@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Gif index{% endblock %}
+{% block title %}Gif {% endblock %}
 
 {% block body %}
     <div class="container mt-5">
-        <h1 class="text-center mb-4">Gif Index</h1>
+        <h1 class="text-center mb-4">Gérer les gif</h1>
 
         <table class="table table-bordered table-hover">
             <thead class="thead-dark">
@@ -13,8 +13,8 @@
                     <th scope="col">Name</th>
                     <th scope="col">Gif</th>
                     <th scope="col">Tags</th>
-                    <th scope="col">Visible</th>
                     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <th scope="col">Visible</th>
                     <th scope="col">Actions</th>
                      {% endif %}
                 </tr>
@@ -26,12 +26,12 @@
                         <td>{{ gif.name }}</td>
                         <td><img src="{{ asset('uploads/gif/' ~ gif.gifFilename) }}" class="img-thumbnail" alt="{{ gif.name }}"></td>
                         <td>{{ gif.tags ? gif.tags|join(', ') : '' }}</td>
-                        <td>{{ gif.visible ? 'Yes' : 'No' }}</td>
                         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <td>{{ gif.visible ? 'Yes' : 'No' }}</td>
                         <td>
-                            <a href="{{ path('app_gif_show', {'id': gif.id}) }}" class="btn btn-dark btn-sm">Show</a>
-                            <a href="{{ path('app_gif_edit', {'id': gif.id}) }}" class="btn btn-dark btn-sm">Edit</a>
-                            <a href="{{ path('app_gif_delete', {'id': gif.id}) }}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</a>
+                            <a href="{{ path('app_gif_show', {'id': gif.id}) }}" class="btn btn-dark btn-sm">Afficher</a><br><br>
+                            <a href="{{ path('app_gif_edit', {'id': gif.id}) }}" class="btn btn-dark btn-sm">Modifier</a><br><br>
+                            <a href="{{ path('app_gif_delete', {'id': gif.id}) }}" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr?')">Supprimer</a>
                         </td>
                         {% endif %}
                     </tr>

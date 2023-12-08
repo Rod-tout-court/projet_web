@@ -44,16 +44,12 @@ class GifController extends AbstractController
     #[Route('/new', name: 'app_gif_new', methods: ['GET', 'POST'])]
     public function new(Request $request, SluggerInterface $slugger, EntityManagerInterface $entityManager, Security $security): Response
     {
-        // Récupérer l'utilisateur connecté
-        $user = $this->getUser();
-
-        // Créer une nouvelle instance de Gif avec l'utilisateur comme auteur
-        $gif = new Gif($user);
-        $gif->setAuthor($user);
-
-        $form = $this->createForm(GifType::class, $gif, ['user' => $user]);
+        // Créer une nouvelle instance de Gif
+        $gif = new Gif();
+    
+        $form = $this->createForm(GifType::class, $gif);
         $form->handleRequest($request);
-
+    
         if ($form->isSubmitted() && $form->isValid()) {
             // Gérer le fichier GIF
             $gifFile = $form->get('gif')->getData();
@@ -61,7 +57,7 @@ class GifController extends AbstractController
                 $originalFilename = pathinfo($gifFile->getClientOriginalName(), PATHINFO_FILENAME);
                 $safeFilename = $slugger->slug($originalFilename);
                 $newFilename = $safeFilename.'-'.uniqid().'.'.$gifFile->guessExtension();
-
+    
                 try {
                     $gifFile->move(
                         $this->getParameter('gif_directory'),
@@ -70,26 +66,31 @@ class GifController extends AbstractController
                 } catch (FileException $e) {
                     // Gérer l'erreur de téléchargement du fichier
                 }
+    
                 $gif->setVisible(true);
                 $gif->setName($newFilename);
-                // On ajoute le nom de l'auteur
-                $author = $security->getUser();
-                $gif->setAuthor($author);
+                $gif->setAuthor($this->getUser());
+    
+                // Convertir les tags en tableau
+                $tags = $form->get('tags')->getData();
+                $gif->setTags(explode(',', $tags));
+    
                 $gif->setGifFilename($newFilename);
             }
-
+    
             // Persister le Gif
             $entityManager->persist($gif);
             $entityManager->flush();
-
+    
             return $this->redirectToRoute('app_gif_index', [], Response::HTTP_SEE_OTHER);
         }
-
+    
         return $this->render('gif/new.html.twig', [
             'gif' => $gif,
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
+    
 
     #[Route('/{id}', name: 'app_gif_show', methods: ['GET'])]
     public function show(Gif $gif): Response
