@@ -78,6 +78,12 @@ class GifController extends AbstractController
                 $gif->setGifFilename($newFilename);
             }
 
+            $tags = $form->get('tags')->getData(); // On récupère les tags prit comme une chaîne de caractère
+            //$tags = preg_split("/[\s,;]+/", $tags_string);
+
+            $gif->setTags($tags);
+
+
             // Persister le Gif
             $entityManager->persist($gif);
             $entityManager->flush();

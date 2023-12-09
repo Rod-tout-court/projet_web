@@ -20,7 +20,7 @@
             <tr>
                 <td>{{ gif.id }}</td>
                 <td>{{ gif.name }}</td>
-                <td><img src="{{ asset('uploads/gif/' ~ gif.gifFilename) }}" class="d-block w-40 mx-auto" alt="{{ gif.name }}">
+                <td><img src="{{ asset('uploads/gif/' ~ gif.gifFilename) }}" class="gif" alt="{{ gif.name }}"></td>
                 <td>{{ gif.tags ? gif.tags|join(', ') : '' }}</td>
                 <td>{{ gif.visible ? 'Yes' : 'No' }}</td>
             </tr>

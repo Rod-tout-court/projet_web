@@ -7,3 +7,8 @@
     width: 80px;
     height: 80px; 
 }
+
+.gif{
+  max-width: 250px;
+  height: auto;
+}
