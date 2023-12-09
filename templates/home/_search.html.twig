@@ -1,0 +1,6 @@
+{{ form_start(form, {'action': path('app_gif_search')}) }}
+    {{ form_row(form.tags) }}
+            <button type="submit" id="search-button" class="btn btn-dark" href="{{ path('app_gif_search') }}">
+                <i class="fas fa-search"></i>
+            </button>
+{{ form_end(form) }}

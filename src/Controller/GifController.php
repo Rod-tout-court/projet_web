@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Gif;
 use App\Form\GifType;
+use App\Form\SearchType;
 use App\Repository\GifRepository;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,6 +18,7 @@ use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 
 #[Route('/gif')]
 class GifController extends AbstractController
@@ -91,12 +94,28 @@ class GifController extends AbstractController
             return $this->redirectToRoute('app_gif_index', [], Response::HTTP_SEE_OTHER);
         }
 
+        
+
         return $this->render('gif/new.html.twig', [
             'gif' => $gif,
             'form' => $form,
         ]);
     }
 
+    #[Route('/search', name: 'app_gif_search', methods: ['POST'])]
+    public function searchByTag(Request $request, GifRepository $gifRepository): Response {
+        $form = $this->createForm(SearchType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $tags = preg_split("/,+/", $form->get("tags")->getData());
+            $tags = array_map('trim', $tags);
+            dump($tags);
+            $gifs = $gifRepository->findByTags($tags);
+            return $this->render('gif/librairie_public.html.twig', [
+                'gifs' => $gifs,
+            ]);
+        }
+    }
     #[Route('/{id}', name: 'app_gif_show', methods: ['GET'])]
     public function show(Gif $gif): Response
     {
@@ -150,7 +169,7 @@ class GifController extends AbstractController
             $entityManager->flush();
         }
     
-        return $this->redirectToRoute('app_gif_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_gif_delete', [], Response::HTTP_SEE_OTHER);
     }
     
 }

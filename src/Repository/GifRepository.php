@@ -21,6 +21,24 @@ class GifRepository extends ServiceEntityRepository
         parent::__construct($registry, Gif::class);
     }
 
+    public function findByTags(array $tags): array {
+        $gif_array = [];
+        dump($tags);
+        // On recherche les gif qui contienne l'un des tags
+        foreach($tags as $tag ){
+            $gifs = $this->createQueryBuilder('g')
+            ->where('g.tags LIKE :val')
+            ->setParameter('val', '%'.$tag.'%')
+            ->getQuery()
+            ->getResult();
+        foreach($gifs as $gif) {
+            array_push($gif_array, $gif);
+        }
+        }
+
+        return $gif_array;
+    }
+
 //    /**
 //     * @return Gif[] Returns an array of Gif objects
 //     */

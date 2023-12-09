@@ -5,7 +5,7 @@
         data-index="{{ form.tags|length > 0 ? form.tags|last.vars.name + 1 : 0 }}"
     >
         {% for tag in form.tags %}
-            {{ include("gif/_tag.html.twig", {'tag': tag.name}) }}
+            {{ include("gif/_tag.html.twig", {'tag': tag}) }}
         {% endfor %}
     </div>
     {{ form_row(form.gif) }}

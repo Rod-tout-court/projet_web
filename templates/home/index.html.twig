@@ -9,10 +9,7 @@
         <h1 class="text-center">Librairie de gif en ligne</h1>
         <!-- Research Section -->
         <div class="input-group mb-3">
-            <input type="search" id="form1" class="form-control" placeholder="Rechercher" />
-            <button type="button" class="btn btn-dark">
-                <i class="fas fa-search"></i>
-            </button>
+            {{ include('home/_search.html.twig', {'form': form}) }}
         </div>
 
 
