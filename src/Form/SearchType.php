@@ -11,7 +11,9 @@ class SearchType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('tags', TextType::class);
+        $builder->add('tags', TextType::class, [
+            'label' => false,
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver) :void

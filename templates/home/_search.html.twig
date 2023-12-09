@@ -1,6 +1,10 @@
-{{ form_start(form, {'action': path('app_gif_search')}) }}
-    {{ form_row(form.tags) }}
-            <button type="submit" id="search-button" class="btn btn-dark" href="{{ path('app_gif_search') }}">
-                <i class="fas fa-search"></i>
-            </button>
+{{ form_start(form, {'action': path('app_gif_search'), 'attr': {'style':'width: 100%;'}}) }}
+    <div class="form-outline" style="display: flex;" data-mdb-input-init>
+        {{ form_widget(form.tags, {'attr': {'class': 'form-control', 'placeholder': "Recherche par tags", 'aria-describedby':"search-addon"}}) }}
+
+        <button type="submit" id="search-button" class="btn btn-dark" href="{{ path('app_gif_search') }}" data-mdb-ripple-init>
+            <i class="fas fa-search"></i>
+        </button>
+    </div>
+
 {{ form_end(form) }}
