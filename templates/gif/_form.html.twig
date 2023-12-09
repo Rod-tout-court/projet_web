@@ -1,4 +1,14 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+    <button type="button" class="btn btn-primary btn-new" data-collection="#tags" id ="new-tag">Nouveau Tag</button>
+    <div id="tags"
+        data-prototype="{{ include("gif/_tag.html.twig", {'tag': form.tags.vars.prototype})|e("html_attr")  }}"
+        data-index="{{ form.tags|length > 0 ? form.tags|last.vars.name + 1 : 0 }}"
+    >
+        {% for tag in form.tags %}
+            {{ include("gif/_tag.html.twig", {'tag': tag.name}) }}
+        {% endfor %}
+    </div>
+    {{ form_row(form.gif) }}
     <button type="submit" class="btn btn-dark">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
+<script src="{{ asset('assets/app.js') }}"></script>

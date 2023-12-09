@@ -5,7 +5,9 @@ namespace App\Form;
 use App\Entity\Gif;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -18,9 +20,16 @@ class GifType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder
-                ->add('tags', null, [
+                ->add('tags', CollectionType::class, [
                     'label' => 'Tags',
-                    'attr' => ['class' => 'form-control'],
+                    'entry_type' => TextType::class,
+                    'entry_options' => [
+                        'label' => 'Tags'
+                    ],
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                    'by_reference' => false,
+                    'prototype' => true,
                 ])
                 ->add('gif', FileType::class, [
                     'label' => 'GIF (Fichier GIF)',
