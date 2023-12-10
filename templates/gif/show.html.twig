@@ -30,9 +30,9 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_gif_index') }}">back to list</a>
+    <a href="{{ path('app_gif_index') }}" class="btn btn-dark btn-sm">Retour</a>
 
-    <a href="{{ path('app_gif_edit', {'id': gif.id}) }}">edit</a>
+    <a href="{{ path('app_gif_edit', {'id': gif.id}) }}" class="btn btn-dark btn-sm">Modifier</a>
 
     {{ include('gif/_delete_form.html.twig') }}
 {% endblock %}

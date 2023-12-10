@@ -59,7 +59,7 @@ class GifController extends AbstractController
 
         $form = $this->createForm(GifType::class, $gif, ['user' => $user]);
         $form->handleRequest($request);
-
+    
         if ($form->isSubmitted() && $form->isValid()) {
             // Gérer le fichier GIF
             $gifFile = $form->get('gif')->getData();
@@ -67,7 +67,7 @@ class GifController extends AbstractController
                 $originalFilename = pathinfo($gifFile->getClientOriginalName(), PATHINFO_FILENAME);
                 $safeFilename = $slugger->slug($originalFilename);
                 $newFilename = $safeFilename.'-'.uniqid().'.'.$gifFile->guessExtension();
-
+    
                 try {
                     $gifFile->move(
                         $this->getParameter('gif_directory'),
@@ -76,11 +76,15 @@ class GifController extends AbstractController
                 } catch (FileException $e) {
                     // Gérer l'erreur de téléchargement du fichier
                 }
+    
                 $gif->setVisible(true);
                 $gif->setName($newFilename);
-                // On ajoute le nom de l'auteur
-                $author = $security->getUser();
-                $gif->setAuthor($author);
+                $gif->setAuthor($this->getUser());
+    
+                // Convertir les tags en tableau
+                $tags = $form->get('tags')->getData();
+                $gif->setTags(explode(',', $tags));
+    
                 $gif->setGifFilename($newFilename);
             }
 
@@ -93,7 +97,7 @@ class GifController extends AbstractController
             // Persister le Gif
             $entityManager->persist($gif);
             $entityManager->flush();
-
+    
             return $this->redirectToRoute('app_gif_index', [], Response::HTTP_SEE_OTHER);
     }
 
@@ -101,7 +105,7 @@ class GifController extends AbstractController
 
         return $this->render('gif/new.html.twig', [
             'gif' => $gif,
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
 

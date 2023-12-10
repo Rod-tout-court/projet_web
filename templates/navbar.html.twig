@@ -2,9 +2,6 @@
     <div class="container-fluid">
         <a class="navbar-brand" href="{{ path('app_home')}}">Accueil</a>
         <a class="navbar-brand" href="{{ path('app_gif_index')}}">Gif</a>
-        <a class="navbar-brand" href="{{ path('app_contact')}}">
-            Contact
-        </a>
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             {% if is_granted('ROLE_ADMIN') %}
                 <a class="navbar-brand" href="{{ path('app_admin')}}">Admin</a>
@@ -16,6 +13,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <a href="{{ path('app_gif_new') }}" class="btn btn-dark ms-auto">Ajouter un nouveau gif !</a>
                 <div class="ms-auto">
                     <a class="nav-link" href="{{ path('app_profil_show')}}">
                         {% set currentUser = app.user %}
@@ -33,8 +31,8 @@
                 </div>
             {% else %}
                 {# Utilisateur non connecté #}
-                <a class="nav-link ms-auto" href="{{ path('app_register')}}"><i
-                            class="bi bi-person-fill fs-4"></i></a>
+                <a class="navbar-brand ms-auto" href="{{ path('app_contact')}}">Contact</a>
+                <a class="nav-link float-right" href="{{ path('app_register')}}"><i class="bi bi-person-fill fs-4"></i></a>
             {% endif %}
         </div>
     </div>

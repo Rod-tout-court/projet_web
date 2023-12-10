@@ -1,38 +1,42 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Contact{% endblock %}
+{% block title %}Message{% endblock %}
 
 {% block body %}
-    <h1>Contact</h1>
+    <div class="container mt-4">
+        <h1 class="mb-4">Informations concernant le message n°{{ contact.id }}</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ contact.id }}</td>
-            </tr>
-            <tr>
-                <th>Firstname</th>
-                <td>{{ contact.firstname }}</td>
-            </tr>
-            <tr>
-                <th>Lastname</th>
-                <td>{{ contact.lastname }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ contact.email }}</td>
-            </tr>
-            <tr>
-                <th>Message</th>
-                <td>{{ contact.message }}</td>
-            </tr>
-        </tbody>
-    </table>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th scope="row">Id</th>
+                    <td>{{ contact.id }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Firstname</th>
+                    <td>{{ contact.firstname }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Lastname</th>
+                    <td>{{ contact.lastname }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Email</th>
+                    <td>{{ contact.email }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Message</th>
+                    <td>{{ contact.message }}</td>
+                </tr>
+            </tbody>
+        </table>
 
-    <a href="{{ path('app_message_index') }}">back to list</a>
+        <div class="d-flex justify-content-between">
+            <a class="btn btn-dark" href="{{ path('app_message_index') }}">Retour</a>
+            <a class="btn btn-dark" href="{{ path('app_message_edit', {'id': contact.id}) }}">Modifier</a>
+            {{ include('message/_delete_form.html.twig') }}
+        </div>
 
-    <a href="{{ path('app_message_edit', {'id': contact.id}) }}">edit</a>
-
-    {{ include('message/_delete_form.html.twig') }}
+        
+    </div>
 {% endblock %}

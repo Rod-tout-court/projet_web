@@ -7,3 +7,8 @@
     width: 80px;
     height: 80px; 
 }
+.img-thumbnail {
+  width: 150px; 
+  height: 150px; 
+  object-fit: cover;
+}

@@ -1,11 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Contact{% endblock %}
+{% block title %}Créer un nouveau message{% endblock %}
 
 {% block body %}
-    <h1>Create new Contact</h1>
+    <div class="container mt-4">
+        <h1>Créer un nouveau message</h1>
 
-    {{ include('message/_form.html.twig') }}
+        {{ include('message/_form.html.twig') }}
 
-    <a href="{{ path('app_message_index') }}">back to list</a>
+        <a class="btn btn-dark mt-3" href="{{ path('app_message_index') }}">Back to List</a>
+    </div>
 {% endblock %}
