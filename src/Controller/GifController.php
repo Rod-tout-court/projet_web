@@ -83,7 +83,7 @@ class GifController extends AbstractController
     
                 // Convertir les tags en tableau
                 $tags = $form->get('tags')->getData();
-                $gif->setTags(explode(',', $tags));
+                $gif->setTags($tags);
     
                 $gif->setGifFilename($newFilename);
             }
