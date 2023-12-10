@@ -4,23 +4,18 @@
 
 {% block body %}
 
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
 <div class="example-wrapper">
     <h1>Hello {{ controller_name }}! ✅</h1>
 
 <div id="exTab1" class="container">	
-<ul  class="nav nav-pills">
-    <li class="active">
-        <a  href="#1a" data-toggle="tab">Utilisateur</a>
-    </li>
-    <li>
-        <a href="#2a" data-toggle="tab">GIF</a>
-    </li>
-</ul>
+    <ul  class="nav nav-tabs">
+        <li>
+            <a  href="#1a" class="nav-link active" data-toggle="tab">Utilisateur</a>
+        </li>
+        <li>
+            <a href="#2a" class="nav-link" data-toggle="tab">GIF</a>
+        </li>
+    </ul>
 
     <div class="tab-content clearfix">
         <div class="tab-pane active" id="1a">

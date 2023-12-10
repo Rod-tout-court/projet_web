@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/gif')]
 class GifController extends AbstractController
@@ -43,13 +44,15 @@ class GifController extends AbstractController
         ]);
     }
     
-
+    #[IsGranted('ROLE_USER', statusCode:403)]
     #[Route('/new', name: 'app_gif_new', methods: ['GET', 'POST'])]
     public function new(Request $request, SluggerInterface $slugger, EntityManagerInterface $entityManager, Security $security): Response
     {
-        // Récupérer l'utilisateur connecté
         $user = $this->getUser();
+        $gif = new Gif($user);
+        $gif->setAuthor($user);
 
+        $form = $this->createForm(GifType::class, $gif, ['user' => $user]);
         // Créer une nouvelle instance de Gif avec l'utilisateur comme auteur
         $gif = new Gif($user);
         $gif->setAuthor($user);
@@ -92,7 +95,7 @@ class GifController extends AbstractController
             $entityManager->flush();
 
             return $this->redirectToRoute('app_gif_index', [], Response::HTTP_SEE_OTHER);
-        }
+    }
 
         
 
@@ -132,25 +135,26 @@ class GifController extends AbstractController
         // Vérifier si l'utilisateur actuel est l'auteur du GIF
         $currentUser = $this->getUser();
         if ($currentUser !== $gif->getAuthor()) {
-            // Rediriger ou afficher un message d'erreur, car l'utilisateur n'est pas autorisé à modifier ce GIF
-            // Par exemple, rediriger vers une page d'accès refusé
-            return $this->redirectToRoute('access_denied'); // Remplacez 'access_denied' par le nom de votre route d'accès refusé
+                // Rediriger ou afficher un message d'erreur, car l'utilisateur n'est pas autorisé à modifier ce GIF
+                // Par exemple, rediriger vers une page d'accès refusé
+                return $this->redirectToRoute('access_denied'); // Remplacez 'access_denied' par le nom de votre route d'accès refusé
+            }
+
+            $form = $this->createForm(GifType::class, $gif);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $entityManager->flush();
+
+                return $this->redirectToRoute('app_gif_index', [], Response::HTTP_SEE_OTHER);
+            }
+
+            return $this->render('gif/edit.html.twig', [
+                'gif' => $gif,
+                'form' => $form,
+            ]);
         }
-
-        $form = $this->createForm(GifType::class, $gif);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_gif_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->render('gif/edit.html.twig', [
-            'gif' => $gif,
-            'form' => $form,
-        ]);
-    }
+    
 
 
     #[Route('/{id}', name: 'app_gif_delete', methods: ['POST'])]

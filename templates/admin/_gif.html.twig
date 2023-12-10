@@ -1,5 +1,5 @@
 <div class="container mt-5">
-        <h1 class="text-center mb-4">Gif Index</h1>
+        <h2 class="text-center mb-4">Gif</h2>
 
         <table class="table table-bordered table-hover">
             <thead class="thead-dark">
@@ -19,11 +19,10 @@
                         <td>{{ gif.name }}</td>
                         <td><img src="{{ asset('uploads/gif/' ~ gif.gifFilename) }}" class="img-thumbnail" alt="{{ gif.name }}"></td>
                         <td>{{ gif.tags ? gif.tags|join(', ') : '' }}</td>
-                        <td>{{ gif.visible ? 'Yes' : 'No' }}</td>
+                        <td>{{ gif.visible ? 'Yes' : 'No' }}  <a href="{{ path('app_admin_gif_visible', {'id': gif.id}) }}" class="btn btn-dark btn-sm img-thumbnail">Toggle Visibility</a></td>
                         <td>
                             <a href="{{ path('app_gif_show', {'id': gif.id}) }}" class="btn btn-dark btn-sm">Show</a>
                             <a href="{{ path('app_gif_edit', {'id': gif.id}) }}" class="btn btn-dark btn-sm">Edit</a>
-                            <a href="{{ path('app_admin_visible', {'id': gif.id}) }}" class="btn btn-dark btn-sm">Toggle Visibility</a>
                             <a href="{{ path('app_admin_gif_delete', {'id': gif.id}) }}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</a>
                         </td>
                     </tr>

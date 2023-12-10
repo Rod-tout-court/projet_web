@@ -13,7 +13,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+#[IsGranted('ROLE_MOD', statusCode:403)]
 #[Route('/admin')]
 class AdminController extends AbstractController
 {
@@ -24,19 +26,15 @@ class AdminController extends AbstractController
     #[Route('/', name: 'app_admin')]
     public function index(UserRepository $userRepository, GifRepository $gifRepository): Response
     {
-        $user = $this->getUser();
-        if(in_array('ROLE_ADMIN', $user->getRoles())){
 
-            $users = $userRepository->findAll();
-            $gifs = $gifRepository->findAll();
-            return $this->render('admin/index.html.twig', [
-                'controller_name' => 'AdminController',
-                'users' => $users,
-                'gifs' => $gifs,
-            ]);
-        } else {
-            return $this->unauthorize();
-        }
+        $users = $userRepository->findAll();
+        $gifs = $gifRepository->findAll();
+        return $this->render('admin/index.html.twig', [
+            'controller_name' => 'AdminController',
+            'users' => $users,
+            'gifs' => $gifs,
+        ]);
+
     }
 
     #[Route('/gif', name:'app_admin_gif')]
@@ -52,7 +50,7 @@ class AdminController extends AbstractController
     {
         // Vérifier si l'utilisateur actuel est l'auteur du GIF
         $currentUser = $this->getUser();
-        if (!in_array('ROLE_ADMIN', $currentUser->getRoles())) {
+        if ($this->isGranted('ROLE_ADMIN')) {
             // Rediriger ou afficher un message d'erreur, car l'utilisateur n'est pas autorisé à supprimer ce GIF
             // Par exemple, rediriger vers une page d'accès refusé
             return $this->redirectToRoute('access_denied'); // Remplacez 'access_denied' par le nom de votre route d'accès refusé
@@ -67,9 +65,7 @@ class AdminController extends AbstractController
     #[Route('/gif/{id}/visible', name: 'app_admin_gif_visible', methods: ['GET'])]
     public function visibility(Request $request, Gif $gif, EntityManagerInterface $entityManager): Response
     {
-        // Vérifier si l'utilisateur actuel est l'auteur du GIF
-        $currentUser = $this->getUser();
-        if (!in_array('ROLE_ADMIN', $currentUser->getRoles()) || !in_array('ROLE_MOD', $currentUser->getRoles()) ) {
+        if ( $this->isGranted('ROLE_ADMIN') ) {
             // Rediriger ou afficher un message d'erreur, car l'utilisateur n'est pas autorisé à supprimer ce GIF
             // Par exemple, rediriger vers une page d'accès refusé
             return $this->redirectToRoute('access_denied'); // Remplacez 'access_denied' par le nom de votre route d'accès refusé
@@ -80,6 +76,18 @@ class AdminController extends AbstractController
     
         return $this->redirectToRoute('app_admin', [], Response::HTTP_SEE_OTHER);
     }
-
+    #[Route('/user/{id}/blocked', name: 'app_admin_user_blocked', methods: ['GET'])]
+    public function userBlocked(Request $request, User $user, EntityManagerInterface $entityManager){
+            // Vérifier si l'utilisateur actuel est l'auteur du GIF
+            if(in_array('ROLE_BLOCKED', $user->getRoles())){
+                $user->setRoles(['ROLE_USER']);
+            } else {
+                $user->setRoles(['ROLE_BLOCKED']);
+            }
+            $entityManager->persist($user);
+            $entityManager->flush();
+        
+            return $this->redirectToRoute('app_admin', [], Response::HTTP_SEE_OTHER);
+}
 
 }
