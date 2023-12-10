@@ -35,6 +35,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', nullable: true)]
     private ?string $photoProfilFilename = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $blocked = null;
+
 
 
     public function getId(): ?int
@@ -133,6 +136,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __toString(): string
     {
         return $this->id . '#' . $this->pseudo;
+    }
+
+    public function isBlocked(): ?bool
+    {
+        return $this->blocked;
+    }
+
+    public function setBlocked(?bool $blocked): static
+    {
+        $this->blocked = $blocked;
+
+        return $this;
     }
 
 }
