@@ -68,7 +68,7 @@ class AdminController extends AbstractController
         if ( $this->isGranted('ROLE_ADMIN') ) {
             // Rediriger ou afficher un message d'erreur, car l'utilisateur n'est pas autorisé à supprimer ce GIF
             // Par exemple, rediriger vers une page d'accès refusé
-            return $this->redirectToRoute('access_denied'); // Remplacez 'access_denied' par le nom de votre route d'accès refusé
+            return $this->redirectToRoute('access_denied'); 
         }
         $gif->setVisible(!$gif->isVisible());
         $entityManager->persist($gif);

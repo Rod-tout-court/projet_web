@@ -44,12 +44,12 @@ public function editProfil(Request $request, SluggerInterface $slugger, Persiste
                     $newFilename
                 );
             } catch (FileException $e) {
-                // handle the exception
+                //gérer
             }
             $user->setPhotoProfilFilename($newFilename);
         }
 
-        // Get the entity manager using $this->getDoctrine()->getManager()
+        
         $entityManager = $doctrine->getManager(); // Fixed this line
 
         $entityManager->persist($user);

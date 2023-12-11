@@ -19,7 +19,6 @@ class SearchType extends AbstractType
     public function configureOptions(OptionsResolver $resolver) :void
     {
         $resolver->setDefaults([
-            // uncomment if you want to bind to a class
             'data_class' => null,
         ]);
     }

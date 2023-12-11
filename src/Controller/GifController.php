@@ -141,7 +141,7 @@ class GifController extends AbstractController
         if ($currentUser !== $gif->getAuthor()) {
                 // Rediriger ou afficher un message d'erreur, car l'utilisateur n'est pas autorisé à modifier ce GIF
                 // Par exemple, rediriger vers une page d'accès refusé
-                return $this->redirectToRoute('access_denied'); // Remplacez 'access_denied' par le nom de votre route d'accès refusé
+                return $this->redirectToRoute('access_denied'); 
             }
 
             $form = $this->createForm(GifType::class, $gif);

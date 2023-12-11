@@ -54,7 +54,7 @@ class GifType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Gif::class,
-            'user' => null, // Ajouter une option pour stocker l'utilisateur connecté
+            'user' => null,
         ]);
     }
 
